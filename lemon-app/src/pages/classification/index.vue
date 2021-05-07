@@ -62,7 +62,11 @@ import { } from '@dcloudio/uni-ui';
                     }
                 });
             },
-
+            gotoSearch() {
+                uni.navigateTo({
+                    url: '/pages/product/search/search'
+                });
+            },
 		}
 	}
 </script>
