@@ -1,10 +1,20 @@
+# 启动步骤
+
+```
+拉取代码下来需要
+npm install
+
+然后运行启动项目
+npm run dev
+```
+
 # admin-lemon
 
 > A Vue.js project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 

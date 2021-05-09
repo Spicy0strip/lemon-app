@@ -56,14 +56,15 @@
                     label="图片"
                 >
                     <el-upload
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        action=""
                         list-type="picture"
                         :on-preview="handlePictureCardPreview"
                         :on-remove="handleRemove"
-                        :on-success="savePictureUrl"
+                        :http-request="httpRequest"
                     >
                         <i class="el-icon-plus"></i>
                     </el-upload>
+                    <img :src="this.formData.imageUrl" alt="">
                 </el-form-item>
                 <el-form-item
                     label="商品类型"
@@ -88,14 +89,15 @@
             </template>
         </el-dialog>
         <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
+            <img width="100%" :src="this.formData.imageUrl" alt="">
         </el-dialog>
     </div>
 </template>
 <script>
-import { Dialog, Button, Form, FormItem, Select, Option, Input, Upload } from 'element-ui';
+import { Dialog, Button, Form, FormItem, Select, Option, Input, Upload, Message, MessageBox } from 'element-ui';
 
 import { mapState } from 'vuex';
+import axios from 'axios'
 
 import { createProduct, getProductType, updateProduct } from '@/services/product.js'
 export default {
@@ -119,11 +121,10 @@ export default {
                 weight: undefined,
                 stock: undefined,
                 type: '',
-                image: '',
+                imageUrl: '',
             },
             productTypeOptions: [],
             dialogVisible: false,
-            dialogImageUrl: '',
         }
     },
     props: {
@@ -147,6 +148,9 @@ export default {
     },
     created () {
         this.updateProductTypeOptions();
+        if (this.mode === 'edit') {
+            this.formData = this.data;
+        }
     },
     methods: {
         onClose() {
@@ -156,12 +160,7 @@ export default {
             console.log(file, fileList);
         },
         handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
             this.dialogVisible = true;
-        },
-        savePictureUrl(response, file, fileList) {
-            console.log(response, file, fileList);
-            this.formData.image = file.url;
         },
         submit() {
             this.$refs.product.validate(async (valid) => {
@@ -189,6 +188,30 @@ export default {
             const res = await getProductType();
             const { code, data, message } = res.data;
             this.productTypeOptions = data;
+        },
+        httpRequest(fileObj) {
+            console.log(fileObj);
+            let formData = new FormData();
+            formData.set("image", fileObj.file);
+            axios
+                .post('http://39.96.82.21:82/shop/upload', formData, {
+                headers: {
+                    "Content-type": "multipart/form-data"
+                }
+                }).then(
+                    res => {
+                        const { code, data, message } = res.data;
+                        if (code !== 200) {
+                            MessageBox({
+                                type: 'error',
+                                message,
+                                title: '操作失败',
+                            });
+                        } else {
+                            this.formData.imageUrl = data;
+                        }
+                    }
+                ).catch();
         }
     }
 }

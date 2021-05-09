@@ -18,3 +18,7 @@ export async function sendOrder(params) {
 export async function agreeExitOrder(params) {
     return await $http.get('/api/agree', { params });
 }
+
+export async function  disAgreeExitOrder(params) {
+    return await $http.get('/api/disagree', { params });
+}

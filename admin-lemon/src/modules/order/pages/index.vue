@@ -35,12 +35,12 @@
                 :inline="true"
             >
                 <el-form-item
-                    label="商品名称"
+                    label="订单名称"
                 >
-                    <el-input placeholder="请输入商品名称" v-model="formData.name" @keyup.enter.native="updateData"></el-input>
+                    <el-input placeholder="请输入订单名称" v-model="formData.name" @keyup.enter.native="updateData"></el-input>
                 </el-form-item>
                 <el-form-item
-                    label="上架状态"
+                    label="订单状态"
                 >
                     <el-select
                         v-model="formData.status"
@@ -102,6 +102,15 @@
                     prop="updateTime"
                 >
                 </el-table-column>
+                <el-table-column
+                    label="操作"
+                >
+                    <template slot-scope="{ row }">
+                        <el-link v-if="row.status === '待发货'" type="primary" @click="sendOrder(row)">发货</el-link>
+                        <el-link v-if="row.status === '退货中'" type="primary" @click="agreeExitOrder(row)">同意退款</el-link>
+                        <el-link v-if="row.status === '退货中'" type="primary" @click="disAgreeExitOrder(row)">拒绝退款</el-link>
+                    </template>
+                </el-table-column>
             </el-table>
         </div>
     </div>
@@ -110,7 +119,7 @@
 
 import { Row, Col, Form, Select, FormItem, Option, Table, TableColumn, Link, Message, MessageBox, Input } from 'element-ui';
 
-import { getOrder, getOrderList } from '@/services/order.js';
+import { getOrder, getOrderList, agreeExitOrder, sendOrder, disAgreeExitOrder } from '@/services/order.js';
 
 export default {
     name: 'order',
@@ -124,7 +133,7 @@ export default {
         ElTable: Table,
         ElTableColumn: TableColumn,
         ElInput: Input,
-        // ElLink: Link,
+        ElLink: Link,
     },
     data() {
         return {
@@ -172,6 +181,54 @@ export default {
                 pageSize: data.pageSize,
             };
             this.loading = false;
+        },
+        async disAgreeExitOrder(row) {
+            const res = await disAgreeExitOrder({ id: row.id });
+            const { code, data, message } = res.data;
+            if (code === 200) {
+                Message({
+                    message: `订单拒绝退款成功`,
+                    type: 'success',
+                });
+            } else {
+                MessageBox({
+                    type: 'error',
+                    message,
+                    title: '操作失败',
+                });
+            }
+        },
+        async agreeExitOrder(row) {
+            const res = await agreeExitOrder({ id: row.id });
+            const { code, data, message } = res.data;
+            if (code === 200) {
+                Message({
+                    message: `同意退款成功`,
+                    type: 'success',
+                });
+            } else {
+                MessageBox({
+                    type: 'error',
+                    message,
+                    title: '操作失败',
+                });
+            }
+        },
+        async sendOrder(row) {
+            const res = await sendOrder({ id: row.id });
+            const { code, data, message } = res.data;
+            if (code === 200) {
+                Message({
+                    message: `订单发货成功`,
+                    type: 'success',
+                });
+            } else {
+                MessageBox({
+                    type: 'error',
+                    message,
+                    title: '操作失败',
+                });
+            }
         }
     }
 }

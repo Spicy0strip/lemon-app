@@ -102,6 +102,7 @@
                 <template slot-scope="{ row }">
                     <el-link v-if="row.status === '已下架'" type="primary" @click="upCargo(row)">上架</el-link>
                     <el-link v-if="row.status === '已上架'" type="primary" @click="downCargo(row)">下架</el-link>
+                    <el-link v-if="row.status === '已下架'" type="primary" @click="editCargo(row)">编辑</el-link>
                 </template>
             </el-table-column>
         </el-table>
@@ -198,6 +199,11 @@ export default {
             this.showUpdateProductDialog = true;
             this.mode = 'create';
         },
+        editCargo(row) {
+            this.mode = 'edit';
+            this.showUpdateProductDialog = true;
+            this.curProduct = row;
+        },
         async upCargo(row) {
             const res = await upCargo({
                 id: row.id,
@@ -235,7 +241,7 @@ export default {
                 });
             }
             this.updateData();
-        },
+        }
     }
 }
 </script>
