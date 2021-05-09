@@ -6,6 +6,34 @@
   "description": "社区电商小程序",
   "glyphs": [
     {
+      "icon_id": "3851371",
+      "name": "商品",
+      "font_class": "shangpin",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "5657520",
+      "name": "地址",
+      "font_class": "dizhi",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "18931169",
+      "name": "订单",
+      "font_class": "dingdan",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "1166313",
+      "name": "柠檬",
+      "font_class": "ningmeng",
+      "unicode": "e7b0",
+      "unicode_decimal": 59312
+    },
+    {
       "icon_id": "1471840",
       "name": "exit",
       "font_class": "exit",

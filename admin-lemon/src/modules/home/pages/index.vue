@@ -9,81 +9,37 @@
             :router="true"
         >
             <el-menu-item index="product" route="/product">
-                <i class="lemon">&#xe604;</i>
+                <i class="menu-item-icon lemon">&#xe665;</i>
                 <span slot="title">商品管理</span>
             </el-menu-item>
-            <!-- <el-submenu :disabled="userInfo.loginLevel !== 2" index="college-teacher">
-                <template slot="title">
-                    <i class="teacher">&#xe603;</i>
-                    <span>学院管理</span>
-                </template>
-                <el-menu-item index="college-teacher" route="/college/teacher">
-                    <i class="teacher">&#xe603;</i>
-                    <span>老师列表</span>
-                </el-menu-item>
-                <el-menu-item index="college-task" route="/college/task">
-                    <i class="teacher">&#xe603;</i>
-                    <span>任务列表</span>
-                </el-menu-item>
-            </el-submenu>
-            <el-submenu :disabled="userInfo.loginLevel !== 4" index="unassign-task">
-                <template slot="title">
-                    <i class="teacher">&#xe606;</i>
-                    <span>系部管理</span>
-                </template>
-                <el-menu-item :disabled="userInfo.loginLevel !== 4" index="unassign-task" route="/department/unassign-task">
-                    <i class="teacher">&#xe606;</i>
-                    <span>未分配任务</span>
-                </el-menu-item>
-                <el-menu-item :disabled="userInfo.loginLevel !== 4" index="assign-task" route="/department/assign-task">
-                    <i class="teacher">&#xe606;</i>
-                    <span>已分配任务</span>
-                </el-menu-item>
-            </el-submenu> -->
             <el-menu-item index="order" route="/order">
-                <i class="lemon">&#xe605;</i>
+                <i class="menu-item-icon lemon">&#xe65d;</i>
                 <span slot="title">订单管理</span>
             </el-menu-item>
             <el-menu-item index="address" route="/address">
-                <i class="lemon">&#xe605;</i>
+                <i class="menu-item-icon lemon">&#xe644;</i>
                 <span slot="title">取货地址管理</span>
             </el-menu-item>
         </el-menu>
         <div class="home-content">
             <header class="home-header">
-                <el-dropdown @command="handleEvent" class="profile" :hide-on-click="false">
+                <el-dropdown class="profile" :hide-on-click="false">
                     <span class="el-dropdown-link">
                         <i class="lemon avatar">&#xe60c;</i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <!-- <el-dropdown-item command="updatePassword">修改密码</el-dropdown-item> -->
-                        <!-- <el-dropdown-item command="address">取货地址</el-dropdown-item> -->
                     </el-dropdown-menu>
                 </el-dropdown>
             </header>
             <router-view></router-view>
         </div>
-        <!-- <update-password-dialog
-            v-if="showUpdatPasswordeDialog"
-            :visible="showUpdatPasswordeDialog"
-            @onclose="showUpdatPasswordeDialog = false"
-        ></update-password-dialog>
-        <profile-dialog
-            v-if="showCheckProfileDialog"
-            :visible="showCheckProfileDialog"
-            @onclose="showCheckProfileDialog = false"
-        ></profile-dialog> -->
     </div>
 </template>
 <script>
 
 import { Menu, Submenu, MenuItemGroup, MenuItem, Button, Dropdown, DropdownItem, DropdownMenu } from "element-ui";
-// import UpdatePasswordDialog from "./components/update-password-dialog.vue";
-// import ProfileDialog from "./components/profile-dialog.vue";
 
 import { mapState } from 'vuex';
-
-// import { getProfile } from '@/services/teacher.js';
 
 export default {
     name: 'index',
@@ -96,8 +52,6 @@ export default {
         ElDropdown: Dropdown,
         ElDropdownItem: DropdownItem,
         ElDropdownMenu: DropdownMenu,
-        // UpdatePasswordDialog,
-        // ProfileDialog,
     },
     data () {
         return {
@@ -110,10 +64,7 @@ export default {
             userInfo: state => state.userInfo,
         }),
         activeName() {
-            // const level = ['product'];
-            // if (this.userInfo) {
-            //     return this.$route.name !== level[this.userInfo.loginLevel - 1] ? level[this.userInfo.loginLevel - 1] : this.$route.name;
-            // }
+
             return this.$route.name;
         }
     },
@@ -128,27 +79,6 @@ export default {
         }
     },
     methods: {
-        async handleEvent(command) {
-            // if (command === 'checkProfile') {
-            //     let show = true;
-            //     if (this.userInfo.loginLevel === 3) {
-            //         const res = await getProfile({
-            //             jobNumber: this.userInfo.jobNumber,
-            //         });
-            //         const { code, data, message } = res.data;
-            //         if (code === 200) {
-            //             this.$store.commit('updateUserInfo', {
-            //                 ...data,
-            //                 ...data.teacherDetail,
-            //             });
-            //         }
-            //     }
-            //     this.showCheckProfileDialog = true;
-            // }
-            // if (command === 'updatePassword') {
-            //     this.showUpdatPasswordeDialog = true;
-            // }
-        },
     }
 }
 </script>
@@ -160,6 +90,9 @@ export default {
         position: absolute;
         bottom: 0;
         top: 0;
+        .menu-item-icon {
+            font-size: 20px;
+        }
     }
     .home-content {
         margin-left: 200px;

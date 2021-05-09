@@ -64,51 +64,51 @@
             >
                 <el-table-column
                     label="订单ID"
-                    prop="id"
+                    prop="order.id"
                 >
                 </el-table-column>
                 <el-table-column
                     label="商品id"
-                    prop="cargoIds"
+                    prop="order.cargoIds"
                 >
                 </el-table-column>
                 <el-table-column
                     label="商品数量"
-                    prop="cargoNumbs"
+                    prop="order.cargoNumbs"
                 >
                 </el-table-column>
                 <el-table-column
                     label="总价"
-                    prop="totalPrice"
+                    prop="order.totalPrice"
                 >
                 </el-table-column>
                 <el-table-column
                     label="状态"
-                    prop="status"
+                    prop="order.status"
                 >
                 </el-table-column>
                 <el-table-column
                     label="地址"
-                    prop="address"
+                    prop="order.address"
                 >
                 </el-table-column>
                 <el-table-column
                     label="创建时间"
-                    prop="insertTime"
+                    prop="order.insertTime"
                 >
                 </el-table-column>
                 <el-table-column
                     label="更新时间"
-                    prop="updateTime"
+                    prop="order.updateTime"
                 >
                 </el-table-column>
                 <el-table-column
                     label="操作"
                 >
                     <template slot-scope="{ row }">
-                        <el-link v-if="row.status === '待发货'" type="primary" @click="sendOrder(row)">发货</el-link>
-                        <el-link v-if="row.status === '退货中'" type="primary" @click="agreeExitOrder(row)">同意退款</el-link>
-                        <el-link v-if="row.status === '退货中'" type="primary" @click="disAgreeExitOrder(row)">拒绝退款</el-link>
+                        <el-link v-if="row.order.status === '待发货'" type="primary" @click="sendOrder(row)">发货</el-link>
+                        <el-link v-if="row.order.status === '退货中'" type="primary" @click="agreeExitOrder(row)">同意退款</el-link>
+                        <el-link v-if="row.order.status === '退货中'" type="primary" @click="disAgreeExitOrder(row)">拒绝退款</el-link>
                     </template>
                 </el-table-column>
             </el-table>
