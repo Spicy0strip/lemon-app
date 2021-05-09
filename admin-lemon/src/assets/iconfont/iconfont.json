@@ -1,0 +1,86 @@
+{
+  "id": "2531728",
+  "name": "lemon-app",
+  "font_family": "lemon",
+  "css_prefix_text": "lemon",
+  "description": "社区电商小程序",
+  "glyphs": [
+    {
+      "icon_id": "1471840",
+      "name": "exit",
+      "font_class": "exit",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "11232086",
+      "name": "exit",
+      "font_class": "exit1",
+      "unicode": "e7cb",
+      "unicode_decimal": 59339
+    },
+    {
+      "icon_id": "16099780",
+      "name": "Shopping Cart",
+      "font_class": "ShoppingCart",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "937267",
+      "name": "mine fill",
+      "font_class": "minefill",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "11982742",
+      "name": "Home, homepage, menu",
+      "font_class": "Homehomepagemenu",
+      "unicode": "e9db",
+      "unicode_decimal": 59867
+    },
+    {
+      "icon_id": "16457685",
+      "name": "shopping",
+      "font_class": "shopping",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "18141861",
+      "name": "yy-classification",
+      "font_class": "tubiaozhizuomoban-mian_fenlei",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "937268",
+      "name": "mine",
+      "font_class": "mine",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8879771",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "10554762",
+      "name": "Shopping cart, finance, business",
+      "font_class": "Shoppingcartfinancebusiness",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "15297147",
+      "name": "financial_classification",
+      "font_class": "financial_classification",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    }
+  ]
+}

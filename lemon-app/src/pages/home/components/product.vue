@@ -11,8 +11,8 @@
                 <text>{{ data.detail }}</text>
             </view>
             <!-- 商品销量 -->
-            <view v-if="data.sale" class="already-sale">
-                <text>已售{{ data.product_sales }}件</text>
+            <view v-if="data.sales" class="already-sale">
+                <text>已售{{ data.sales }}件</text>
             </view>
             <!-- 商品价格 -->
             <view class="price d-s-c">
