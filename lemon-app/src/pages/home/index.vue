@@ -9,9 +9,6 @@
 		</view>
         <view class="product-content">
             <product class="product-item" v-for="product in products" :key="product.id" :data="product"></product>
-            <product class="product-item" v-for="product in products" :key="product.id" :data="product"></product>
-            <product class="product-item" v-for="product in products" :key="product.id" :data="product"></product>
-            <product class="product-item" v-for="product in products" :key="product.id" :data="product"></product>
         </view>
     </view>
 </template>
@@ -46,7 +43,6 @@ import Product from './components/product.vue';
             updateData() {
                 const _self = this;
                 this._get(true, 'queryCargo', this.query, function({ data }) {
-                    console.log('商品', data);
                     _self.products = data.list ? data.list : [];
                     _self.pagenation = {
                         total: data.total,
