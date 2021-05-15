@@ -41,7 +41,31 @@
 			"style": {
 				"navigationBarTitleText": "商品列表"
 			}
-		}
+        },
+        {
+            "path": "pages/product/detail/detail",
+            "style": {
+                "navigationBarTitleText": "商品详情"
+            }
+        },
+        {
+            "path": "pages/mine/order/order",
+            "style": {
+                "navigationBarTitleText": "确认下单"
+            }
+        },
+        {
+            "path": "pages/mine/address/index",
+            "style": {
+                "navigationBarTitleText": "地址列表"
+            }
+        },
+        {
+            "path": "pages/mine/myorder/myorder",
+            "style": {
+                "navigationBarTitleText": "我的订单"
+            }
+        }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

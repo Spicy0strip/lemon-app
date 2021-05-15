@@ -18,21 +18,21 @@
                 <view class="left"><text class="min-name">我的订单</text></view>
             </view>
             <view class="d-b-c">
-                <view class="item" @click="gotoPage('/pages/order/myorder/myorder?dataType=all')">
+                <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=all')">
                     <view class="icon-box"><span class="icon iconfont icon-quanbudingdan"></span></view>
                     <text>全部订单</text>
                 </view>
-                <view class="item" @click="gotoPage('/pages/order/myorder/myorder?dataType=payment')">
+                <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=unsend')">
                     <view class="icon-box pr">
                         <span class="icon iconfont icon-icon"></span>
-                        <text class="dot d-c-c" v-if="orderCount.payment != null && orderCount.payment > 0">{{ orderCount.payment }}</text>
+                        <text class="dot d-c-c" v-if="orderCount.notShipped != null && orderCount.notShipped > 0">{{ orderCount.notShipped }}</text>
                     </view>
-                    <text>待付款</text>
+                    <text>待发货</text>
                 </view>
-                <view class="item" @click="gotoPage('/pages/order/myorder/myorder?dataType=received')">
+                <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=sending')">
                     <view class="icon-box pr">
                         <span class="icon iconfont icon-daishouhuo"></span>
-                        <text class="dot d-c-c" v-if="orderCount.received != null && orderCount.received > 0">{{ orderCount.received }}</text>
+                        <text class="dot d-c-c" v-if="orderCount.toBeReceived != null && orderCount.toBeReceived > 0">{{ orderCount.toBeReceived }}</text>
                     </view>
                     <text>待收货</text>
                 </view>
@@ -71,10 +71,11 @@
                 menus: [
                     {
                         name: '收货地址',
-                        path: '/pages/user/address/address',
-                        icon: 'icon-dizhi1'
+                        icon: 'icon-dizhi1',
+                        path: '/pages/mine/address/index',
                     }
                 ],
+                orderCount: {},
 			}
         },
         computed: {
@@ -82,12 +83,15 @@
 		onLoad() {
             this.openId = uni.getStorageSync('token');
             this.userInfo = JSON.parse(JSON.stringify(uni.getStorageSync('userInfo')));
+            uni.showLoading({
+                title: '加载中',
+                mask:true
+            });
+            this.updateData();
         },
         onShow() {
-            console.log('onshow1', this.openId, this.userInfo);
             this.openId = uni.getStorageSync('token');
             this.userInfo = JSON.parse(JSON.stringify(uni.getStorageSync('userInfo')));
-            console.log('onshow2', this.openId, this.userInfo);
         },
 		methods: {
             login() {
@@ -96,14 +100,23 @@
                 })
             },
             loginout() {
-                console.log("loginout");
                 uni.setStorageSync('token', '');
                 uni.setStorageSync('userInfo', null);
                 this.openId = '';
                 this.userInfo = null;
             },
+            updateData() {
+                const _self = this;
+                _self._get(true, 'user/queryOrderNumbs', {}, function({ data }) {
+                    _self.orderCount = data;
+                    uni.hideLoading();
+                })
+            },
             /*跳转页面*/
             gotoPage(path) {
+                if (path === '/pages/mine/address/index') {
+                    uni.setStorageSync('link-address-type', 'mine');
+                }
                 uni.navigateTo({
                     url: path
                 });

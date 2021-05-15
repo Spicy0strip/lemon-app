@@ -5,7 +5,7 @@
 			<view class="index-search-box">
 				<view class="index-search t-c" @click="gotoSearch">
 					<span class="icon iconfont icon-sousuo"></span>
-					<text class="ml10">{{search!=''?search:'搜索产品'}}</text>
+					<text class="ml10">{{name!=''?name:'搜索产品'}}</text>
 				</view>
 			</view>
 
@@ -97,14 +97,6 @@
                     pageSize: 10,
                 },
                 name: '',
-				// page: 1,
-				// category_id: 0,
-				// search: '',
-				// sortType: '',
-				// sortPrice: 0,
-				// list_rows: 10,
-				// last_page: 0,
-
 			};
 		},
         computed:{

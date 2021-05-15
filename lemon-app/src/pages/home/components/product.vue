@@ -1,5 +1,5 @@
 <template>
-    <view class="page-component-container__product" v-if="data">
+    <view class="page-component-container__product" @click="gotoPage(data.id)" v-if="data">
         <image :src="data.imageUrl"/>
         <view class="product-info">
             <!-- 商品名称 -->
@@ -11,7 +11,7 @@
                 <text>{{ data.detail }}</text>
             </view>
             <!-- 商品销量 -->
-            <view v-if="data.sales" class="already-sale">
+            <view class="already-sale">
                 <text>已售{{ data.sales }}件</text>
             </view>
             <!-- 商品价格 -->
@@ -43,7 +43,18 @@
 
 		},
 		methods: {
-
+            gotoPage(e) {
+                console.log('dd', e);
+                uni.navigateTo({
+                    url: `/pages/product/detail/detail?productId=${e}`,
+                    fail: (err) => {
+                        console.log('fail', err);
+                    },
+                    success: () => {
+                        console.log('success');
+                    }
+                });
+            }
 		}
 	}
 </script>

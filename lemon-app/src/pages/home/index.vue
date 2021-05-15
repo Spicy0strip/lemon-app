@@ -72,6 +72,11 @@ import Product from './components/product.vue';
             width: 350rpx;
             height: 350rpx;
         }
+        box-shadow: 0 0 8rpx rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+        overflow: hidden;
+        border-radius: 20rpx;
+        margin: 8rpx 0;
     }
 }
 </style>
