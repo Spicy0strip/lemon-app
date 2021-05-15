@@ -183,13 +183,14 @@ export default {
             this.loading = false;
         },
         async disAgreeExitOrder(row) {
-            const res = await disAgreeExitOrder({ id: row.id });
+            const res = await disAgreeExitOrder({ id: row.order.id });
             const { code, data, message } = res.data;
             if (code === 200) {
                 Message({
                     message: `订单拒绝退款成功`,
                     type: 'success',
                 });
+                this.updateData();
             } else {
                 MessageBox({
                     type: 'error',
@@ -199,13 +200,14 @@ export default {
             }
         },
         async agreeExitOrder(row) {
-            const res = await agreeExitOrder({ id: row.id });
+            const res = await agreeExitOrder({ id: row.order.id });
             const { code, data, message } = res.data;
             if (code === 200) {
                 Message({
                     message: `同意退款成功`,
                     type: 'success',
                 });
+                this.updateData();
             } else {
                 MessageBox({
                     type: 'error',
@@ -215,13 +217,15 @@ export default {
             }
         },
         async sendOrder(row) {
-            const res = await sendOrder({ id: row.id });
+            console.log('ddd', row);
+            const res = await sendOrder({ id: row.order.id });
             const { code, data, message } = res.data;
             if (code === 200) {
                 Message({
                     message: `订单发货成功`,
                     type: 'success',
                 });
+                this.updateData();
             } else {
                 MessageBox({
                     type: 'error',

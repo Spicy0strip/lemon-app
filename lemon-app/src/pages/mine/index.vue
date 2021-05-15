@@ -19,7 +19,11 @@
             </view>
             <view class="d-b-c">
                 <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=all')">
-                    <view class="icon-box"><span class="icon iconfont icon-quanbudingdan"></span></view>
+                    <!-- <view class="icon-box"><span class="icon iconfont icon-quanbudingdan"></span></view> -->
+                    <view class="icon-box pr">
+                        <span class="icon iconfont icon-quanbudingdan"></span>
+                        <text class="dot d-c-c" v-if="orderCount.all != null && orderCount.all > 0">{{ orderCount.all }}</text>
+                    </view>
                     <text>全部订单</text>
                 </view>
                 <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=unsend')">

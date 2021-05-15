@@ -12,6 +12,7 @@ export async function getOrderList(params) {
 }
 
 export async function sendOrder(params) {
+    console.log(params);
     return await $http.get('/api/send', { params });
 }
 
