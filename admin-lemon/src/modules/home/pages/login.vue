@@ -1,7 +1,7 @@
 <template>
     <div class="page-conponent-container_login">
-        <!-- <img class="xupt" src='@/assets/images/xupt.png' /> -->
-        <!-- <img class="logo" src="@/assets/images/js.png" /> -->
+        <img class="xupt" src='@/assets/images/xupt.png' />
+        <img class="logo" src="@/assets/images/title.png" />
         <el-form
             class="login"
             :model="formData"
@@ -96,7 +96,7 @@ export default {
         margin-left: 45px;
     }
     img.logo {
-        margin-left: 15%;
+        margin-left: 0%;
         width: 900px;
     }
     .login {
