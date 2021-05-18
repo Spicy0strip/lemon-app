@@ -40,7 +40,7 @@
                     </view>
                     <text>待收货</text>
                 </view>
-                <view class="item" @click="gotoPage('/pages/order/refund/index/index')">
+                <view class="item" @click="gotoPage('/pages/mine/myorder/myorder?status=exit')">
                     <view class="icon-box pr">
                         <span class="icon iconfont icon-tuikuan"></span>
                         <text class="dot d-c-c" v-if="orderCount.refund != null && orderCount.refund > 0">{{ orderCount.refund }}</text>

@@ -80,6 +80,7 @@
 			/*添加地址*/
 			addAddress() {
                 uni.setStorageSync('my-info-address', JSON.stringify(this.myInfo));
+                uni.setStorageSync('link-address-type', 'order');
 				uni.navigateTo({
 					url: "/pages/mine/address/index",
 				});

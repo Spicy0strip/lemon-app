@@ -93,6 +93,9 @@ import { } from '@dcloudio/uni-ui';
             }
         },
 		onLoad() {
+        },
+        onShow() {
+            console.log("onShow");
             this.updateData();
         },
         created () {
@@ -100,6 +103,7 @@ import { } from '@dcloudio/uni-ui';
 		methods: {
             updateData() {
                 const _self = this;
+                console.log("updateData");
                 _self._get(true, '/user/queryCart', _self.query, function({ data }) {
                     _self.carts = data.list ? data.list : [];
                     _self.pagenation = {
@@ -112,23 +116,24 @@ import { } from '@dcloudio/uni-ui';
             },
             reduceFunc(item) {
                 const _self = this;
-                _self.get(true, '/user/decrby', {
+                _self._get(true, '/user/decrby', {
                     cargoId: item.id,
                 }, function({ data, code, message }) {
-                    // if (code === 200) {
-                        
-                    // }
+                    if (code === 200) {
+                        _self.updateData();
+                    }
                 });
             },
             addFunc(item) {
                 const _self = this;
-                _self.get(true, '/user/incrby', {
+                _self._get(true, '/user/incrby', {
                     cargoId: item.id,
                 }, function({ data, code, message }) {
                     // if (code === 200) {
-                        
+                    _self.updateData();
                     // }
                 });
+
             },
             /*单选*/
             checkItem(e, index) {

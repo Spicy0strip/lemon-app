@@ -57,7 +57,7 @@
 				¥
 				<text class="num">{{ orderData.orderPrices }}</text>
 			</view>
-			<button type="primary" @click="SubmitOrder">提交订单</button>
+			<button type="primary" @click="submitOrder">提交订单</button>
 		</view>
 	</view>
 </template>
@@ -117,51 +117,41 @@ export default {
             console.log('res::', uni.getStorageSync('select-address'));
             this.defaultAddress = res ? res : this.addresses.length ? this.addresses[0] : '';
         },
-		/*选择配送方式*/
-		tabFunc(e) {
-			this.tab_type = e;
-			if (e == 0) {
-				this.delivery = 10;
-			} else {
-				this.delivery = 20;
-			}
-			this.getData();
-		},
 		/*提交订单*/
-		SubmitOrder() {
+		submitOrder() {
             let _self = this;
-            uni.navigateTo({
-                url: "/pages/home/index",
+            if (!_self.myInfo.name || !_self.myInfo.phone) {
+                uni.showToast({
+                    title: '联系人或手机号未输入',
+                    duration: 2000
+                });
+                return;
+            }
+            uni.showLoading({
+				title: '加载中',
+				mask:true
             });
-            // if (!_self.myInfo.name || !_self.myInfo.phone) {
-            //     uni.showToast({
-            //         title: '联系人或手机号未输入',
-            //         duration: 2000
-            //     });
-            //     return;
-            // }
-            // uni.showLoading({
-			// 	title: '加载中',
-			// 	mask:true
-            // });
-            // const body = {
-            //     address: _self.defaultAddress,
-            //     type: _self.query.orderType === 'gwc' ? 'gwc' : '',
-            //     cargoIds: _self.query.productId,
-            //     cargoNumbs: _self.query.productNum,
-            //     name: _self.myInfo.name,
-            //     phone: _self.myInfo.phone,
-            // };
-            // _self._post(true, 'user/generateOrder', body, function({ data, code, message }) {
-            //     if (code === 200) {
-            //         uni.showToast({
-            //             title: '下单成功',
-            //             duration: 2000
-            //         });
-            //     }
-            //     console.log(data, code, message);
-            //     uni.hideLoading();
-            // });
+            const body = {
+                address: _self.defaultAddress,
+                type: _self.query.orderType === 'gwc' ? 'gwc' : '',
+                cargoIds: _self.query.productId ? _self.query.productId : self.productData.map(item => item.id).join(','),
+                cargoNumbs: _self.query.productNum ? _self.query.productNum : self.productData.map(item => item.numbs).join(','),
+                name: _self.myInfo.name,
+                phone: _self.myInfo.phone,
+            };
+            _self._post(true, 'user/generateOrder', body, function({ data, code, message }) {
+                if (code === 200) {
+                    uni.showToast({
+                        title: '下单成功',
+                        duration: 2000
+                    });
+                    uni.navigateTo({
+                        url: "/pages/mine/myorder/myorder?status=unsend",
+                    });
+                }
+                console.log(data, code, message);
+                uni.hideLoading();
+            });
         },
         updateAddress() {
             const _self = this;

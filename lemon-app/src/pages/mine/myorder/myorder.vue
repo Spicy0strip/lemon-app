@@ -4,14 +4,14 @@
 			<view :class="status === 'all'?'tab-item active':'tab-item'" @click="stateFunc('all')">
 				全部订单
 			</view>
-			<!-- <view :class="state_active==1?'tab-item active':'tab-item'" @click="stateFunc('')">
-				待付款
-			</view> -->
 			<view :class="status === 'unsend' ? 'tab-item active':'tab-item'" @click="stateFunc('unsend')">
 				待发货
 			</view>
 			<view :class="status === 'sending' ? 'tab-item active':'tab-item'" @click="stateFunc('sending')">
 				待收货
+			</view>
+            <view :class="status === 'exit' ? 'tab-item active':'tab-item'" @click="stateFunc('exit')">
+				退款/售后
 			</view>
 		</view>
 
@@ -128,13 +128,6 @@
                 },
 				/*顶部刷新*/
 				topRefresh: false,
-				dataType: 'all',
-				/*是否显示支付类别弹窗*/
-				isPayPopup: false,
-				/*支付方式*/
-				pay_type: 20,
-				/*订单id*/
-				order_id: 0,
 				no_more: false,
 				loading: true,
 				/*是否显示核销二维码*/
@@ -160,6 +153,7 @@
                     'unsend': '待发货',
                     'sending': '已发货',
                     'all': '',
+                    'exit': '退货中',
                 }
                 console.log(statusMap, this.status);
                 return {
@@ -209,43 +203,43 @@
 			updateData() {
 				let self = this;
                 self.loading = true;
+                console.log('loading', this.query);
                 self._get(true, 'queryOrders', this.query, function({ data }) {
                     const { list, pageNum, pageSize, total } = data;
                     self.cargoDatas = list;
+                    console.log('data', data);
                     self.pagenation = {
                         total,
                         pageNum,
                         pageSize,
                     }
-                    self.loading = false;
-                    uni.hideLoading();
+                    if (self.status === 'exit') {
+                        self._get(true, 'queryOrders', {
+                            ...self.query,
+                            status: '退货成功',
+                        }, function(res) {
+                            // const { list, pageNum, pageSize, total } = data1;
+                            console.log('data1', res);
+                            self.cargoDatas = list.concat(res.data.list);
+                            self.pagenation = {
+                                total: self.pagenation.total + res.data.total,
+                                pageNum,
+                                pageSize,
+                            }
+                            self.loading = false;
+                            uni.hideLoading();
+                        });
+                    } else {
+                        self.loading = false;
+                        uni.hideLoading();
+                    }
+                    
                 });
 			},
 			/*跳转页面*/
 			gotoPage(e) {
 				uni.navigateTo({
 					url: '/pages/order/order-detail/order-detail?order_id=' + e,
-				});
-			},
-
-			/*去支付*/
-			payTypeFunc(payType,orderId) {
-				let self = this;
-				self.isPayPopup = false;
-				let pay_source = 'wx';
-				// #ifdef  H5
-				pay_source = 'mp';
-				// #endif
-				uni.showLoading({
-					title: '加载中',
-					mask:true
-				});
-				self._post('user.order/pay', {
-					payType: payType,
-					order_id: orderId,
-					pay_source: pay_source
-				}, function(res) {
-					pay(res, self);
 				});
 			},
 
@@ -304,13 +298,6 @@
 					}
 				});
 
-			},
-
-			/*去评论*/
-			gotoEvaluate(e) {
-				uni.navigateTo({
-					url: '/pages/order/evaluate/evaluate?order_id=' + e,
-				});
 			},
 
 			/*可滚动视图区域到底触发*/
